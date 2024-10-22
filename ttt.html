@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10x10 Coordinate Grid</title>
+    <style>
+        :root {
+            --container-width: 500px;
+            --line-width: 2px;
+            --border-width: calc(var(--line-width) / 2);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            grid-template-rows: repeat(10, 1fr);
+            width: var(--container-width);
+            height: var(--container-width);
+            border: 1px solid #333;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+        .cell {
+            border-color: #ccc;
+            border-style: dashed;
+            border-width: var(--border-width);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cell span {
+            font-size: 12px;
+        }
+
+        .mask {
+            width: var(--container-width);
+            height: var(--container-width);
+            border: 1px solid #333;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            z-index: 1;
+        }
+        .mask .point {
+            width: calc(var(--line-width) * 2);
+            height: calc(var(--line-width) * 2);
+            background-color: red;
+            position: absolute;
+            left: calc(var(--container-width) / 2 - var(--line-width));
+            top: calc(var(--container-width) / 2 - var(--line-width));
+        }
+
+        .mask .box {
+            width: calc(var(--container-width) / 10);
+            height: calc(var(--container-width) / 10);
+            background-color: rgba(0, 255, 0, .5);
+            position: absolute;
+            left: calc(var(--container-width) / 2);
+            top: calc(var(--container-width) / 2);
+        }
+        .mask .box.target {
+            background-color: rgba(255, 0, 0, .5);
+        }
+        .box {
+  transform: translateX(100px);
+}
+
+.box:hover {
+    transform: translateZ(100px);
+  transition: transform 3s;
+}
+    </style>
+</head>
+<body>
+    <!-- 主题灵感
+    矩阵是什么
+    矩阵的应用
+    广泛应用于许多领域，包括物理学、计算机科学、工程、经济学等。
+    
+    矩阵的应用
+    线性方程组：矩阵用于表达和求解线性方程组。例如，方程组可以写成矩阵形式，从而使用矩阵运算来简化解法。
+    图像处理：图像可以表示为像素矩阵，通过矩阵运算可以对图像进行变换、滤波等操作。
+    机器学习：矩阵用于表示数据集和权重，通过矩阵乘法来进行神经网络的前向传播和反向传播。
+    计算机图形学：在3D图形学中，矩阵用于表示和处理旋转、缩放、平移等几何变换。
+    
+    矩阵的起源
+    九章算术、高斯消元法
+    矩阵体系
+    
+    矩阵的几何意义
+    
+    矩阵的基本运算
+    矩阵加法：同维度矩阵对应位置的元素相加。
+    矩阵乘法：矩阵乘法不是元素逐个相乘，而是行和列的元素相乘后求和。
+    转置：将矩阵的行与列互换。
+    逆矩阵：对于方阵（行数与列数相同），有时可以找到一个矩阵 
+    
+    矩阵用于表示和处理旋转、缩放、平移等几何变换。 -->
+<div class="grid">
+    <!-- Generate the grid cells -->
+    <script>
+        for (let y = 9; y >= 0; y--) {
+            for (let x = 0; x < 10; x++) {
+                document.write(`<div class="cell"><span></span></div>`);
+            }
+        }
+    </script>
+</div>
+
+<div class="mask">
+    <div class="point"></div>
+    <div class="box"></div>
+    <!-- <div
+        class="box target"
+        style="transform: translateX(50px) translateY(50px);"
+    ></div> -->
+    <!-- <div
+        class="box target"
+        style="transform: scale(2, 0.5); transform-origin: 0 0;"
+    ></div> -->
+    <!-- <div
+        class="box target"
+        style="transform: rotate(45deg); transform-origin: 0 0;"
+    ></div> -->
+    <!-- <div
+        class="box target"
+        style="transform: skew(15deg, 30deg); transform-origin: 0 0;"
+    ></div> -->
+    <!--
+    [
+        1, 0, 50
+        0, 1, 50
+        0, 0, 1
+    ]
+    .
+    [
+        50
+        50
+        1
+    ]
+    =
+    [
+        100
+        100
+        1
+    ]
+
+    [
+        2, 0, 0
+        0, 0.5, 0
+        0, 0, 1
+    ]
+    .
+    [
+        50
+        50
+        1
+    ]
+    =
+    [
+        100
+        100
+        1
+    ]
+
+    [
+        cos45, -sin45, 0
+        sin45, cos45, 0
+        0, 0, 1
+    ]
+    .
+    [
+        50
+        50
+        1
+    ]
+    =
+    [
+        x
+        y
+        1
+    ]
+
+    [
+        1, tan15, 0
+        tan30, 1, 0
+        0, 0, 1
+    ]
+    .
+    [
+        50
+        50
+        1
+    ]
+    =
+    [
+        x
+        y
+        1
+    ]
+    -->
+    <!-- <div
+        class="box target"
+        style="transform: matrix(1, 0, 0, 1, 50, 50);"
+    ></div> -->
+    <!-- <div
+        class="box target"
+        style="transform: matrix(2, 0, 0, 0.5, 0, 0); transform-origin: 0 0;"
+    ></div> -->
+    <!-- <div
+        class="box target"
+        style="transform: matrix(0.7071067811865476, 0.7071067811865475, -0.7071067811865475, 0.7071067811865475, 0, 0); transform-origin: 0 0;"
+    ></div> -->
+    <div
+        class="box target"
+        style="transform: matrix(1, 0.5773502691896257, 0.2679491924311227, 1, 0, 0); transform-origin: 0 0;"
+    ></div>
+</div>
+
+</body>
+</html>
